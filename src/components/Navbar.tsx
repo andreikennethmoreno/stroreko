@@ -18,7 +18,7 @@ async function Navbar() {
           <div className="flex items-center">
             <Link
               href="/"
-              className="text-xl font-bold text-primary font-mono tracking-wider"
+              className="text-xl font-bold font-mono tracking-wider"
             >
               🌱 Plantventory
             </Link>
@@ -47,7 +47,7 @@ async function Navbar() {
               <>
                 {/*Sign out Button*/}
                 <Button
-                  variant="secondary"
+                  variant="outline"
                   className="flex items-center gap-2"
                   asChild
                 >

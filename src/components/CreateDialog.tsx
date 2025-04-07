@@ -52,8 +52,9 @@ export default function CreateDialog() {
       <AlertDialogTrigger asChild>
         <Button
           variant="default"
-          className="ml-auto flex items-center gap-2"
+          className="ml-auto font-bold flex items-center gap-2"
           asChild
+
         >
           <span>
             <Sprout className="w-4 h-4" />

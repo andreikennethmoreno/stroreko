@@ -99,6 +99,8 @@ export default function InventoryTable({ products }: InventoryTableProps) {
         <TableHeader>
           <TableRow>
             <TableHead>Product ID</TableHead>
+            <TableHead>Image</TableHead>
+
             <TableHead>Name</TableHead>
             <TableHead>Category</TableHead>
             <TableHead>Price</TableHead>
@@ -119,7 +121,16 @@ export default function InventoryTable({ products }: InventoryTableProps) {
                 key={product.id}
                 onClick={() => router.push(productUrl)}
               >
-                <TableCell>{product.id}</TableCell>
+                <TableCell>{product.id.slice(0, 10)}...</TableCell>
+                <TableCell>
+                  <div className="w-16 h-16">
+                    <img
+                      src={product.imageUrl ?? undefined}
+                      alt={product.name}
+                      className="w-full h-full object-cover rounded-md"
+                    />
+                  </div>
+                </TableCell>
                 <TableCell>{product.name}</TableCell>
                 <TableCell>{product.category}</TableCell>
                 <TableCell>{product.price}</TableCell>

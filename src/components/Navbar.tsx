@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { HomeIcon, LogIn, LogOut, Package } from "lucide-react";
+import { HomeIcon, LogIn, LogOut, Package, ShoppingCart } from "lucide-react";
 import ModeToggle from "./ModeTogggle";
 import { stackServerApp } from "@/stack";
 import { UserButton } from "@stackframe/stack";
@@ -29,6 +29,13 @@ async function Navbar() {
               <Link href="/products">
                 <Package className="w-4 h-4" />
                 <span className="hidden lg:inline">Products</span>
+              </Link>
+            </Button>
+
+            <Button variant="ghost" className="flex items-center gap-2" asChild>
+              <Link href="/cart">
+                <ShoppingCart className="w-4 h-4" />
+                <span className="hidden lg:inline">Cart</span>
               </Link>
             </Button>
 

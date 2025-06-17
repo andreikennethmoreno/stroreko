@@ -1,6 +1,6 @@
 "use client";
 
-import { deletePlant } from "@/actions/plant.aciton";
+import { deleteProduct } from "@/actions/product.aciton";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -17,21 +17,20 @@ import { Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 
 interface DeleteDialogProps {
-  plant: {
+  product: {
     id: string;
   };
 }
 
-export default function DeleteDialog({ plant }: DeleteDialogProps) {
+export default function DeleteDialog({ product }: DeleteDialogProps) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await deletePlant(plant.id);
-
-      toast.success("Plant deleted successfully");
+      await deleteProduct(product.id);
+      toast.success("Product deleted successfully");
     } catch (error) {
-      console.error("Error deleting plant:", error);
-      toast.error("Failed to delete plant");
+      console.error("Error deleting product:", error);
+      toast.error("Failed to delete product");
     }
   };
 
@@ -52,8 +51,8 @@ export default function DeleteDialog({ plant }: DeleteDialogProps) {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription className="text-[15px]">
-            This action cannot be undone. This will permanently delete the plant
-            from our servers.
+            This action cannot be undone. This will permanently delete the
+            product from our database.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <form onSubmit={handleSubmit}>

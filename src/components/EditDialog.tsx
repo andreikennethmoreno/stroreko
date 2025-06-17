@@ -10,31 +10,31 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { EditIcon, Sprout } from "lucide-react";
+import { EditIcon } from "lucide-react";
 import { Combobox } from "./ui/combo-box";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { useState } from "react";
 import { Textarea } from "./ui/textarea";
-import { editPlant, getPlantById } from "@/actions/plant.aciton";
 import toast from "react-hot-toast";
 import ImageUpload from "./ImageUpload";
+import { editProduct, getProductById } from "@/actions/product.aciton";
 
-type Plant = NonNullable<Awaited<ReturnType<typeof getPlantById>>>;
+type Product = NonNullable<Awaited<ReturnType<typeof getProductById>>>;
 
 interface EditDialogProps {
-  plant: Plant;
+  product: Product;
 }
 
-export default function EditDialog({ plant }: EditDialogProps) {
+export default function EditDialog({ product }: EditDialogProps) {
   const [formData, setFormData] = useState(() => ({
-    name: plant.name.trim(),
-    description: (plant.description || "").trim(),
-    stock: plant.stock,
-    price: plant.price,
-    category: plant.category.trim(),
-    userId: plant.userId.trim(),
-    imageUrl: plant.imageUrl || "",
+    name: product.name.trim(),
+    description: (product.description || "").trim(),
+    stock: product.stock,
+    price: product.price,
+    category: product.category.trim(),
+    userId: product.userId.trim(),
+    imageUrl: product.imageUrl || "",
   }));
 
   const handleChange = (field: string, value: string | number) => {
@@ -44,12 +44,12 @@ export default function EditDialog({ plant }: EditDialogProps) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const newPlant = await editPlant(plant.id, formData);
-      console.log("plant edited: ", newPlant);
-      toast.success("Plant edited successfully");
+      const updatedProduct = await editProduct(product.id, formData);
+      console.log("Product edited: ", updatedProduct);
+      toast.success("Product edited successfully");
     } catch (error) {
-      console.error("error creating plant", error);
-      toast.error("Failed to edit plant");
+      console.error("Error editing product", error);
+      toast.error("Failed to edit product");
     }
   };
 
@@ -63,15 +63,15 @@ export default function EditDialog({ plant }: EditDialogProps) {
         >
           <span>
             <EditIcon className="w-4 h-4" />
-            Edit Plant
+            Edit Product
           </span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Add a Plant</AlertDialogTitle>
+          <AlertDialogTitle>Edit Product</AlertDialogTitle>
           <AlertDialogDescription>
-            Fill out the form below to add a new plant to your inventory.
+            Update the details of this product in your inventory.
           </AlertDialogDescription>
         </AlertDialogHeader>
 
@@ -95,14 +95,16 @@ export default function EditDialog({ plant }: EditDialogProps) {
               />
             </div>
           </div>
+
           <Label htmlFor="description">Description</Label>
           <Textarea
             id="description"
-            placeholder="Type your message here."
+            placeholder="Type product description here."
             rows={5}
             value={formData.description}
             onChange={(e) => handleChange("description", e.target.value)}
           />
+
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label htmlFor="stock">Stock</Label>
@@ -126,14 +128,12 @@ export default function EditDialog({ plant }: EditDialogProps) {
             </div>
           </div>
 
-          {/*Image Upload*/}
+          {/* Image Upload */}
           <div className="py-5">
             <ImageUpload
               endpoint="postImage"
               value={formData.imageUrl}
-              onChange={(url) => {
-                handleChange("imageUrl", url);
-              }}
+              onChange={(url) => handleChange("imageUrl", url)}
             />
           </div>
 

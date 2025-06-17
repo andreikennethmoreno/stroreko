@@ -13,16 +13,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model CartItem {
+  id         String    @id @default(uuid())
+  userId     String    // no relation, just a string
+  product    Product   @relation(fields: [productId], references: [id])
+  productId  String
+  quantity   Int       @default(1)
 
-model Plants {
-  id String @id @default(cuid())
-  name String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Product {
+  id          String    @id @default(cuid())
+  name        String
   description String?
-  category String
-  stock Int 
-  price Float 
-  createdAt  DateTime      @default(now())
-  updatedAt  DateTime      @updatedAt
-  userId String 
-  imageUrl String?
+  category    String
+  stock       Int
+  price       Float
+  imageUrl    String?
+  userId      String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  CartItem    CartItem[]
 }

@@ -10,15 +10,14 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Sprout } from "lucide-react";
 import { Combobox } from "./ui/combo-box";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { useState } from "react";
 import { Textarea } from "./ui/textarea";
-import { createPlant } from "@/actions/plant.aciton";
 import toast from "react-hot-toast";
 import ImageUpload from "./ImageUpload";
+import { createProduct } from "@/actions/product.aciton";
 
 export default function CreateDialog() {
   const [formData, setFormData] = useState({
@@ -38,12 +37,12 @@ export default function CreateDialog() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const newPlant = await createPlant(formData);
-      console.log("plant created: ", newPlant);
-      toast.success("Plant created successfully");
+      const newProduct = await createProduct(formData);
+      console.log("Product created: ", newProduct);
+      toast.success("Product created successfully");
     } catch (error) {
-      console.error("error creating plant", error);
-      toast.error("Failed to create plant");
+      console.error("Error creating product", error);
+      toast.error("Failed to create product");
     }
   };
 
@@ -54,19 +53,17 @@ export default function CreateDialog() {
           variant="default"
           className="ml-auto font-bold flex items-center gap-2"
           asChild
-
         >
           <span>
-            <Sprout className="w-4 h-4" />
-            Add Plant
+            Add Product
           </span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Add a Plant</AlertDialogTitle>
+          <AlertDialogTitle>Add a Product</AlertDialogTitle>
           <AlertDialogDescription>
-            Fill out the form below to add a new plant to your inventory.
+            Fill out the form below to add a new product to your inventory.
           </AlertDialogDescription>
         </AlertDialogHeader>
 
@@ -121,17 +118,16 @@ export default function CreateDialog() {
             </div>
           </div>
 
-          {/*Image Upload*/}
+          {/* Image Upload */}
           <div className="py-5">
-          <ImageUpload
-            endpoint="postImage"
-            value={formData.imageUrl}
-            onChange={(url) => {
-              handleChange("imageUrl", url);
-            }}
-          />
+            <ImageUpload
+              endpoint="postImage"
+              value={formData.imageUrl}
+              onChange={(url) => {
+                handleChange("imageUrl", url);
+              }}
+            />
           </div>
-          
 
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>

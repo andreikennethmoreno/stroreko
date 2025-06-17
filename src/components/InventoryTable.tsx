@@ -12,33 +12,32 @@ import { Search } from "lucide-react";
 import { Input } from "./ui/input";
 import { Combobox } from "./ui/combo-box";
 import { useState } from "react";
-import { getPlants } from "@/actions/plant.aciton";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "./ui/skeleton";
 import CreateDialog from "./CreateDialog";
 import EditDialog from "./EditDialog";
 import DeleteDialog from "./DeleteDialog";
+import { getProducts } from "@/actions/product.aciton";
 
-type Plants = Awaited<ReturnType<typeof getPlants>>;
+type Products = Awaited<ReturnType<typeof getProducts>>;
 
 interface InventoryTableProps {
-  plants: Plants;
+  products: Products;
 }
 
-export default function InventoryTable({ plants }: InventoryTableProps) {
+export default function InventoryTable({ products }: InventoryTableProps) {
   const router = useRouter();
 
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Filter plants by name and category (if selected)
-  const filteredPlants = plants?.userPlants?.filter(
-    (plant) =>
-      plant.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (selectedCategory === "" || plant.category === selectedCategory)
+  const filteredProducts = products?.userProducts?.filter(
+    (product) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (selectedCategory === "" || product.category === selectedCategory)
   );
 
-  if (!plants) {
+  if (!products) {
     return (
       <div className="w-full space-y-4">
         <div className="flex items-center gap-2 py-4">
@@ -49,47 +48,25 @@ export default function InventoryTable({ plants }: InventoryTableProps) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>
-                <Skeleton className="w-full h-4" />
-              </TableHead>
-              <TableHead>
-                <Skeleton className="w-full h-4" />
-              </TableHead>
-              <TableHead>
-                <Skeleton className="w-full h-4" />
-              </TableHead>
-              <TableHead>
-                <Skeleton className="w-full h-4" />
-              </TableHead>
-              <TableHead>
-                <Skeleton className="w-full h-4" />
-              </TableHead>
-              <TableHead className="text-right">
-                <Skeleton className="w-full h-4" />
-              </TableHead>
+              {Array(6)
+                .fill(0)
+                .map((_, i) => (
+                  <TableHead key={i}>
+                    <Skeleton className="w-full h-4" />
+                  </TableHead>
+                ))}
             </TableRow>
           </TableHeader>
           <TableBody>
             {Array.from({ length: 5 }).map((_, i) => (
               <TableRow key={i}>
-                <TableCell>
-                  <Skeleton className="w-full h-4" />
-                </TableCell>
-                <TableCell>
-                  <Skeleton className="w-full h-4" />
-                </TableCell>
-                <TableCell>
-                  <Skeleton className="w-full h-4" />
-                </TableCell>
-                <TableCell>
-                  <Skeleton className="w-full h-4" />
-                </TableCell>
-                <TableCell>
-                  <Skeleton className="w-full h-4" />
-                </TableCell>
-                <TableCell className="text-right">
-                  <Skeleton className="w-full h-4" />
-                </TableCell>
+                {Array(6)
+                  .fill(0)
+                  .map((_, j) => (
+                    <TableCell key={j}>
+                      <Skeleton className="w-full h-4" />
+                    </TableCell>
+                  ))}
               </TableRow>
             ))}
           </TableBody>
@@ -103,7 +80,7 @@ export default function InventoryTable({ plants }: InventoryTableProps) {
       <div className="flex items-center gap-2 py-4">
         <div className="relative max-w-sm w-full">
           <Input
-            placeholder="Filter plants..."
+            placeholder="Filter products..."
             className="pl-10"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -121,7 +98,7 @@ export default function InventoryTable({ plants }: InventoryTableProps) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Plant ID</TableHead>
+            <TableHead>Product ID</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Category</TableHead>
             <TableHead>Price</TableHead>
@@ -130,28 +107,30 @@ export default function InventoryTable({ plants }: InventoryTableProps) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {filteredPlants?.map((plant) => {
-            const slugifiedName = plant.name.toLowerCase().replace(/\s+/g, "-");
-            const slug = `${plant.id}--${slugifiedName}`;
-            const plantUrl = `/plants/${slug}`;
+          {filteredProducts?.map((product) => {
+            const slugifiedName = product.name
+              .toLowerCase()
+              .replace(/\s+/g, "-");
+            const slug = `${product.id}--${slugifiedName}`;
+            const productUrl = `/products/${slug}`;
 
             return (
-              <TableRow key={plant.id} onClick={() => router.push(plantUrl)}>
-                <TableCell>{plant.id}</TableCell>
-
-                <TableCell>{plant.name}</TableCell>
-                <TableCell>{plant.category}</TableCell>
-                <TableCell>{plant.price}</TableCell>
-                <TableCell className="font-bol">{plant.stock}</TableCell>
-
+              <TableRow
+                key={product.id}
+                onClick={() => router.push(productUrl)}
+              >
+                <TableCell>{product.id}</TableCell>
+                <TableCell>{product.name}</TableCell>
+                <TableCell>{product.category}</TableCell>
+                <TableCell>{product.price}</TableCell>
+                <TableCell className="font-bold">{product.stock}</TableCell>
                 <TableCell className="text-right">
                   <div
                     className="flex justify-end space-x-4"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <EditDialog plant={plant}/>
-                    <DeleteDialog plant={plant}/>
-
+                    <EditDialog product={product} />
+                    <DeleteDialog product={product} />
                   </div>
                 </TableCell>
               </TableRow>

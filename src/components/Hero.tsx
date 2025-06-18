@@ -22,14 +22,14 @@ interface Hero7Props {
 }
 
 const Hero7 = ({
-  heading = "A Personal Digital Storefront for My Coding Projects",
-description = "A custom-built platform where I offer source code, templates, and learning resources directly to my audience—without third-party restrictions or fees.",
-button = {
-  text: "Browse Projects",
-  url: "/store",
-},
+  heading = "Personal Storefront for My Coding Resources",
+  description = "A tailor-made platform where I sell source code, templates, and learning resources directly to you—free from third-party fees and restrictions.",
+  button = {
+    text: "Browse Projects",
+    url: "/store",
+  },
   reviews = {
-    count: 200,
+    count: 100,
     rating: 5.0,
     avatars: [
       {

@@ -30,19 +30,13 @@ export default async function OrdersPage() {
       <div className="min-h-screen ">
         <div className="container mx-auto px-4 py-8 max-w-4xl">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold  mb-2">
-              Your Orders
-            </h1>
-            <p className="">
-              Track and download your digital purchases
-            </p>
+            <h1 className="text-3xl font-bold  mb-2">Your Orders</h1>
+            <p className="">Track and download your digital purchases</p>
           </div>
           <Card className="text-center py-16">
             <CardContent>
               <ShoppingBag className="h-16 w-16 mx-auto te mb-6" />
-              <h3 className="text-xl font-semibold  mb-2">
-                No orders yet
-              </h3>
+              <h3 className="text-xl font-semibold  mb-2">No orders yet</h3>
               <p className=" max-w-sm mx-auto">
                 Your purchased digital products will appear here once you make
                 your first order.
@@ -72,9 +66,7 @@ export default async function OrdersPage() {
       <div className="container mx-auto px-4 py-8 max-w-5xl">
         <div className="mb-8">
           <h1 className="text-3xl font-bold  mb-2">Your Orders</h1>
-          <p className="">
-            Track and download your digital purchases
-          </p>
+          <p className="">Track and download your digital purchases</p>
         </div>
 
         <div className="space-y-6">
@@ -117,7 +109,7 @@ export default async function OrdersPage() {
                   </div>
                   <div className="text-right">
                     <div className="text-2xl font-bold ">
-                      ₱{order.total.toFixed(2)}
+                      ${order.total.toFixed(2)}
                     </div>
                     <div className="text-sm ">
                       {order.items.length} item
@@ -143,7 +135,6 @@ export default async function OrdersPage() {
                               }
                               alt={product.name}
                               className="w-full h-full object-cover"
-                  
                             />
                           </div>
 
@@ -171,14 +162,14 @@ export default async function OrdersPage() {
                                   <span className="">
                                     Price:{" "}
                                     <span className="font-semibold ">
-                                      ₱{price.toFixed(2)}
+                                      ${price.toFixed(2)}
                                     </span>
                                   </span>
                                   {quantity > 1 && (
                                     <span className="">
                                       Subtotal:{" "}
                                       <span className="font-semibold ">
-                                        ₱{subtotal.toFixed(2)}
+                                        ${subtotal.toFixed(2)}
                                       </span>
                                     </span>
                                   )}

@@ -24,7 +24,7 @@ interface ComboboxProps {
 }
 
 const productCategories = [
-  { value: "", label: "None" },
+  { value: "-", label: "None" },
   { value: "code", label: "Code Projects" },
   { value: "courses", label: "Mini-Courses" },
   { value: "guides", label: "PDF Guides" },

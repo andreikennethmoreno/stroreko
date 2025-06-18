@@ -204,7 +204,7 @@ export default function CartTable({ cartItems }: CartTableProps) {
                           </Badge>
                         </TableCell>
                         <TableCell className="font-semibold">
-                          ₱{product.price.toFixed(2)}
+                          ${product.price.toFixed(2)}
                         </TableCell>
                         <TableCell>
                           <div className="flex justify-center items-center space-x-1">
@@ -242,7 +242,7 @@ export default function CartTable({ cartItems }: CartTableProps) {
                           </div>
                         </TableCell>
                         <TableCell className="text-right font-bold text-lg">
-                          ₱{total}
+                          ${total}
                         </TableCell>
                         <TableCell className="text-right">
                           <RemoveFromCartButton cartItemId={item.id} />
@@ -309,7 +309,7 @@ export default function CartTable({ cartItems }: CartTableProps) {
                             Total Amount:
                           </span>
                           <span className="text-2xl font-bold">
-                            ₱{selectedSummary.totalAmount.toFixed(2)}
+                            ${selectedSummary.totalAmount.toFixed(2)}
                           </span>
                         </div>
                       </div>

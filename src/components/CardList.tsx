@@ -228,7 +228,7 @@ export default function CardList({ products }: CardListProps) {
 
                       <div className="flex items-center justify-between">
                         <div className="text-2xl font-bold ">
-                          ₱{product.price.toLocaleString()}
+                          ${product.price.toLocaleString()}
                         </div>
                       </div>
                     </div>

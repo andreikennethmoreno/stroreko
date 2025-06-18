@@ -1,41 +1,100 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ArrowUpRight, CirclePlay } from "lucide-react";
+import { Star } from "lucide-react";
 import React from "react";
 
-const Hero = () => {
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+
+interface Hero7Props {
+  heading?: string;
+  description?: string;
+  button?: {
+    text: string;
+    url: string;
+  };
+  reviews?: {
+    count: number;
+    rating?: number;
+    avatars: {
+      src: string;
+      alt: string;
+    }[];
+  };
+}
+
+const Hero7 = ({
+  heading = "A Personal Digital Storefront for My Coding Projects",
+description = "A custom-built platform where I offer source code, templates, and learning resources directly to my audience—without third-party restrictions or fees.",
+button = {
+  text: "Browse Projects",
+  url: "/store",
+},
+  reviews = {
+    count: 200,
+    rating: 5.0,
+    avatars: [
+      {
+        src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-1.webp",
+        alt: "Avatar 1",
+      },
+      {
+        src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-2.webp",
+        alt: "Avatar 2",
+      },
+      {
+        src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-3.webp",
+        alt: "Avatar 3",
+      },
+      {
+        src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-4.webp",
+        alt: "Avatar 4",
+      },
+      {
+        src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-5.webp",
+        alt: "Avatar 5",
+      },
+    ],
+  },
+}: Hero7Props) => {
   return (
-    <div className="min-h-screen flex items-center justify-center overflow-hidden">
-      <div className="max-w-screen-xl w-full mx-auto grid lg:grid-cols-2 gap-12 px-6 py-12 lg:py-0">
-        <div className="my-auto">
-          <Badge className="bg-gradient-to-br via-70% from-primary via-muted/30 to-primary rounded-full py-1 border-none">
-            Just released v1.0.0
-          </Badge>
-          <h1 className="mt-6 max-w-[17ch] text-4xl md:text-5xl lg:text-[2.75rem] xl:text-5xl font-bold !leading-[1.2] tracking-tight">
-            Customized Shadcn UI Blocks & Components
-          </h1>
-          <p className="mt-6 max-w-[60ch] text-lg">
-            Explore a collection of Shadcn UI blocks and components, ready to
-            preview and copy. Streamline your development workflow with
-            easy-to-implement examples.
+    <section className="py-32 min-h-screen">
+      <div className=" text-center">
+        <div className="mx-auto flex max-w-5xl flex-col gap-6">
+          <h1 className="text-3xl font-extrabold lg:text-6xl">{heading}</h1>
+          <p className="text-muted-foreground text-balance lg:text-lg">
+            {description}
           </p>
-          <div className="mt-12 flex items-center gap-4">
-            <Button size="lg" className="rounded-full text-base">
-              Get Started <ArrowUpRight className="!h-5 !w-5" />
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="rounded-full text-base shadow-none"
-            >
-              <CirclePlay className="!h-5 !w-5" /> Watch Demo
-            </Button>
+        </div>
+        <Button asChild size="lg" className="mt-10">
+          <a href={button.url}>{button.text}</a>
+        </Button>
+        <div className="mx-auto mt-10 flex w-fit flex-col items-center gap-4 sm:flex-row">
+          <span className="mx-4 inline-flex items-center -space-x-4">
+            {reviews.avatars.map((avatar, index) => (
+              <Avatar key={index} className="size-14 border">
+                <AvatarImage src={avatar.src} alt={avatar.alt} />
+              </Avatar>
+            ))}
+          </span>
+          <div>
+            <div className="flex items-center gap-1">
+              {[...Array(5)].map((_, index) => (
+                <Star
+                  key={index}
+                  className="size-5 fill-yellow-400 text-yellow-400"
+                />
+              ))}
+              <span className="mr-1 font-semibold">
+                {reviews.rating?.toFixed(1)}
+              </span>
+            </div>
+            <p className="text-muted-foreground text-left font-medium">
+              from {reviews.count}+ reviews
+            </p>
           </div>
         </div>
-        <div className="w-full aspect-video lg:aspect-auto lg:w-[1000px] lg:h-screen bg-accent rounded-xl lg:rounded-none" />
       </div>
-    </div>
+    </section>
   );
 };
 
-export default Hero;
+export { Hero7 };

@@ -40,6 +40,17 @@ export default function CreateDialog() {
       const newProduct = await createProduct(formData);
       console.log("Product created: ", newProduct);
       toast.success("Product created successfully");
+
+      setFormData({
+        name: "",
+        description: "",
+        downloadUrl: "",
+        price: 1,
+        category: "",
+        userId: "",
+        imageUrl: "",
+      });
+
     } catch (error) {
       console.error("Error creating product", error);
       toast.error("Failed to create product");
@@ -70,11 +81,12 @@ export default function CreateDialog() {
             <div>
               <Label htmlFor="name">Name</Label>
               <Input
-                id="name"
-                type="text"
-                placeholder="Enter name"
-                value={formData.name}
-                onChange={(e) => handleChange("name", e.target.value)}
+              id="name"
+              type="text"
+              placeholder="Enter name"
+              value={formData.name}
+              onChange={(e) => handleChange("name", e.target.value)}
+              required
               />
             </div>
             <div>

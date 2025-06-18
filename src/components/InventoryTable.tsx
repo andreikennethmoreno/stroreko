@@ -113,13 +113,13 @@ export default function InventoryTable({ products }: InventoryTableProps) {
   };
 
   const formatDate = (date: string | Date) => {
-      const d = typeof date === "string" ? new Date(date) : date;
-      return d.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      });
-    };
+    const d = typeof date === "string" ? new Date(date) : date;
+    return d.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
 
   return (
     <div className="min-h-screen ">
@@ -157,7 +157,7 @@ export default function InventoryTable({ products }: InventoryTableProps) {
                 <div>
                   <p className="text-sm font-medium ">Total Value</p>
                   <p className="text-3xl font-bold ">
-                    ₱{totalValue.toLocaleString()}
+                    ${totalValue.toLocaleString()}
                   </p>
                 </div>
                 <div className="bg-green-100 p-3 rounded-full">
@@ -173,7 +173,7 @@ export default function InventoryTable({ products }: InventoryTableProps) {
                 <div>
                   <p className="text-sm font-medium ">Average Price</p>
                   <p className="text-3xl font-bold ">
-                    ₱{avgPrice.toLocaleString()}
+                    ${avgPrice.toLocaleString()}
                   </p>
                 </div>
                 <div className="bg-purple-100 p-3 rounded-full">
@@ -318,7 +318,7 @@ export default function InventoryTable({ products }: InventoryTableProps) {
                           </Badge>
                         </TableCell>
                         <TableCell className="font-semibold ">
-                          ₱{product.price.toLocaleString()}
+                          ${product.price.toLocaleString()}
                         </TableCell>
                         <TableCell className="">
                           {formatDate(product.createdAt)}
@@ -431,7 +431,7 @@ export default function InventoryTable({ products }: InventoryTableProps) {
 
                         <div className="flex items-center justify-between">
                           <div className="text-2xl font-bold ">
-                            ₱{product.price.toLocaleString()}
+                            ${product.price.toLocaleString()}
                           </div>
                         </div>
 

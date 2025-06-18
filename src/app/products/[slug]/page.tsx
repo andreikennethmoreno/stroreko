@@ -28,10 +28,22 @@ async function Page({ params }: { params: { slug: string } }) {
     return <SignIn />;
   }
 
+  if (!product) throw new Error("Product not found");
+
+  // Convert null fields to undefined to match Product type
+  const safeProduct = product
+    ? {
+        ...product,
+        imageUrl: product.imageUrl ?? undefined,
+        downloadUrl: product.downloadUrl ?? undefined,
+        description: product.description ?? undefined,
+      }
+    : product;
+
   return (
     <div className="mt-7 max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-10 gap-6">
       <div className="lg:col-span-full">
-        <ProductCard product={product} />
+        <ProductCard product={safeProduct} />
       </div>
     </div>
   );

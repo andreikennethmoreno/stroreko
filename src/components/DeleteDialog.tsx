@@ -43,7 +43,7 @@ export default function DeleteDialog({ product }: DeleteDialogProps) {
           asChild
         >
           <span>
-            <Trash2 className="w-4 h-4" />
+            <Trash2 className="w-4 h-4 text-default" />
           </span>
         </Button>
       </AlertDialogTrigger>

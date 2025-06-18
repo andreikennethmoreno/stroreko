@@ -27,7 +27,13 @@ export default async function AdminUsersPage() {
 
   return (
     <div className="max-w-5xl mx-auto mt-10 w-full">
-      <h1 className="text-2xl font-bold mb-6">All Users</h1>
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold mb-2">All Users</h1>
+        <p className="text-muted-foreground">
+          View registered users in your application.
+        </p>
+      </div>
       <ClientUserTable users={users} />
     </div>
   );

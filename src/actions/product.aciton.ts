@@ -92,15 +92,45 @@ export async function editProduct(id: string, data: Prisma.ProductUpdateInput) {
   }
 }
 
-// Delete a product
+// Delete a product and clean up any empty orders
 export async function deleteProduct(id: string) {
   try {
+    console.log("Deleting:", id);
     const currentUserId = await getUserId();
     if (!currentUserId) return;
 
+    // 0. Delete CartItems first
+    await prisma.cartItem.deleteMany({
+      where: { productId: id },
+    });
+
+    // 1. Find orders that include this product
+    const orderItems = await prisma.orderItem.findMany({
+      where: { productId: id },
+      select: { orderId: true },
+    });
+
+    const orderIds = Array.from(
+      new Set(orderItems.map((item) => item.orderId))
+    );
+
+    // 2. Delete the product (this will cascade delete orderItems)
     const deletedProduct = await prisma.product.delete({
       where: { id },
     });
+
+    // 3. Delete orders that are now empty
+    for (const orderId of orderIds) {
+      const remaining = await prisma.orderItem.count({
+        where: { orderId },
+      });
+
+      if (remaining === 0) {
+        await prisma.order.delete({
+          where: { id: orderId },
+        });
+      }
+    }
 
     revalidatePath("/products");
     return deletedProduct;

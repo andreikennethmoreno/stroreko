@@ -30,7 +30,7 @@ export default function EditDialog({ product }: EditDialogProps) {
   const [formData, setFormData] = useState(() => ({
     name: product.name.trim(),
     description: (product.description || "").trim(),
-    downloadUrl: "",
+    downloadUrl: product.downloadUrl || "",
     price: product.price,
     category: product.category.trim(),
     userId: product.userId.trim(),

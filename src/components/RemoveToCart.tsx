@@ -33,7 +33,7 @@ export default function RemoveFromCartButton({
 
   return (
     <Button
-      variant="secondary"
+      variant="destructive"
       size="icon"
       onClick={(e) => {
         e.stopPropagation(); // avoid row navigation
@@ -41,7 +41,7 @@ export default function RemoveFromCartButton({
       }}
       disabled={isPending}
     >
-      <Trash2 className="w-4 h-4 text-destructive" />
+      <Trash2 className="w-4 h-4 text-default" />
     </Button>
   );
 }

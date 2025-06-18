@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { HomeIcon, LogIn, LogOut, Package, ShoppingCart } from "lucide-react";
+import { ClipboardList, HomeIcon, LogIn, LogOut, Package, Settings, ShoppingCart, Users } from "lucide-react";
 import ModeToggle from "./ModeTogggle";
 import { stackServerApp } from "@/stack";
 import { UserButton } from "@stackframe/stack";
@@ -8,6 +8,11 @@ import { UserButton } from "@stackframe/stack";
 async function Navbar() {
   const user = await stackServerApp.getUser();
   const app = stackServerApp.urls;
+
+  const isAdmin =
+    user &&
+    user.id === process.env.ADMIN_ID &&
+    user.primaryEmail === process.env.ADMIN_EMAIL;
 
   return (
     <nav className="sticky top-0 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50">
@@ -45,6 +50,43 @@ async function Navbar() {
                 <span className="hidden lg:inline">Home</span>
               </Link>
             </Button>
+
+            {isAdmin && (
+              <>
+                <Button
+                  variant="ghost"
+                  className="flex items-center gap-2"
+                  asChild
+                >
+                  <Link href="/admin/orders">
+                    <ClipboardList className="w-4 h-4" />
+                    <span className="hidden lg:inline">Orders</span>
+                  </Link>
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  className="flex items-center gap-2"
+                  asChild
+                >
+                  <Link href="/admin/myproducts">
+                    <Settings className="w-4 h-4" />
+                    <span className="hidden lg:inline">Manage Products</span>
+                  </Link>
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  className="flex items-center gap-2"
+                  asChild
+                >
+                  <Link href="/admin/users">
+                    <Users className="w-4 h-4" />
+                    <span className="hidden lg:inline">Users</span>
+                  </Link>
+                </Button>
+              </>
+            )}
 
             <ModeToggle />
 

@@ -27,7 +27,9 @@ export default function PayPalCheckout({ total }: PayPalCheckoutProps) {
   };
 
   const onApprove = async (data: any, actions: any) => {
-    setIsProcessing(true);
+    setIsProcessing(true); 
+
+
     try {
       const order = await actions.order.get();
       const payerName = order.payer?.name?.given_name || "";
@@ -65,6 +67,7 @@ export default function PayPalCheckout({ total }: PayPalCheckoutProps) {
     setPaypalError("An error occurred with PayPal. Please try again.");
   };
 
+  
   return (
     <div>
       {isProcessing && (
@@ -80,23 +83,25 @@ export default function PayPalCheckout({ total }: PayPalCheckoutProps) {
         </div>
       )}
 
-      <div className="border rounded-2xl ">
-  <PayPalScriptProvider
-    options={{
-      clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "",
-      currency: "USD",
-      intent: "capture",
-    }}
-  >
-    <PayPalButtons
-      createOrder={createOrder}
-      onApprove={onApprove}
-      onError={onError}
-      style={{ layout: "vertical" }}
-      disabled={isProcessing}
-    />
-  </PayPalScriptProvider>
-</div>
+      <div className="border rounded-2xl p-4 shadow-sm bg-white">
+  
+
+        <PayPalScriptProvider
+          options={{
+            clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "",
+            currency: "USD",
+            intent: "capture",
+          }}
+        >
+          <PayPalButtons
+            createOrder={createOrder}
+            onApprove={onApprove}
+            onError={onError}
+            style={{ layout: "vertical" }}
+            disabled={isProcessing}
+          />
+        </PayPalScriptProvider>
+      </div>
     </div>
   );
 }

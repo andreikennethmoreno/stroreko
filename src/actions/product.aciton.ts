@@ -4,15 +4,13 @@ import { prisma } from "@/lib/prisma";
 import { getUserId } from "./user.action";
 import { revalidatePath } from "next/cache";
 import { Prisma } from "@prisma/client";
+import { stackServerApp } from "@/stack";
 
-// Get all products for current user with optional search
+
+// Get all products with optional search (visible to everyone)
 export async function getProducts(searchTerm?: string) {
   try {
-    const currentUserId = await getUserId();
-
-    const whereClause: any = {
-      userId: currentUserId,
-    };
+    const whereClause: any = {};
 
     if (searchTerm) {
       whereClause.name = {
@@ -32,6 +30,7 @@ export async function getProducts(searchTerm?: string) {
   }
 }
 
+
 // Get single product by ID
 export async function getProductById(id: string) {
   return await prisma.product.findUnique({
@@ -39,17 +38,27 @@ export async function getProductById(id: string) {
   });
 }
 
-// Create a new product
 export async function createProduct(data: Prisma.ProductCreateInput) {
   console.log("Creating product:", data);
+  
   try {
-    const currentUserId = await getUserId();
-    if (!currentUserId) return;
+    const user = await stackServerApp.getUser();
+
+    const adminId = process.env.ADMIN_ID;
+    const adminEmail = process.env.ADMIN_EMAIL;
+
+    const isAdmin =
+      user && user.id === adminId && user.primaryEmail === adminEmail;
+
+    if (!isAdmin) {
+      console.error("Unauthorized create attempt");
+      return null; // or throw new Error("Unauthorized")
+    }
 
     const newProduct = await prisma.product.create({
       data: {
         ...data,
-        userId: currentUserId,
+        userId: user.id,
       },
     });
 
@@ -60,6 +69,7 @@ export async function createProduct(data: Prisma.ProductCreateInput) {
     throw error;
   }
 }
+
 
 // Update a product
 export async function editProduct(id: string, data: Prisma.ProductUpdateInput) {

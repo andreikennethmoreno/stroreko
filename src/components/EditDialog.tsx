@@ -30,7 +30,7 @@ export default function EditDialog({ product }: EditDialogProps) {
   const [formData, setFormData] = useState(() => ({
     name: product.name.trim(),
     description: (product.description || "").trim(),
-    stock: product.stock,
+    downloadUrl: "",
     price: product.price,
     category: product.category.trim(),
     userId: product.userId.trim(),
@@ -107,13 +107,13 @@ export default function EditDialog({ product }: EditDialogProps) {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="stock">Stock</Label>
+              <Label htmlFor="downloadUrl">Download URL</Label>
               <Input
-                id="stock"
-                type="number"
-                placeholder="Enter stock quantity"
-                value={formData.stock}
-                onChange={(e) => handleChange("stock", Number(e.target.value))}
+                id="downloadUrl"
+                type="url"
+                placeholder="https://example.com/your-file.zip"
+                value={formData.downloadUrl}
+                onChange={(e) => handleChange("downloadUrl", e.target.value)}
               />
             </div>
             <div>

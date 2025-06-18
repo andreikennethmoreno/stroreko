@@ -45,7 +45,6 @@ export default function ProductCard({ product }: ProductCardProps) {
               ${product.price}
             </CardTitle>
             <Badge>{product.category}</Badge>
-            <CardDescription>Stock: {product.stock}</CardDescription>
             <CardDescription className="text-white">
               {product.description}
             </CardDescription>

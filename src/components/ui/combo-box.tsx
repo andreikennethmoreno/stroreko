@@ -23,17 +23,15 @@ interface ComboboxProps {
   onChange: (value: string) => void;
 }
 
-const plantCategories = [
+const productCategories = [
   { value: "", label: "None" },
-  { value: "Indoor", label: "Indoor" },
-  { value: "Outdoor", label: "Outdoor" },
-  { value: "Succulent", label: "Succulent" },
-  { value: "Flowering", label: "Flowering" },
-  { value: "Herb", label: "Herb" },
-  { value: "Fern", label: "Fern" },
-  { value: "Tree", label: "Tree" },
-  { value: "Shrub", label: "Shrub" },
+  { value: "code", label: "Code Projects" },
+  { value: "courses", label: "Mini-Courses" },
+  { value: "guides", label: "PDF Guides" },
+  { value: "templates", label: "Productivity Templates" },
+  { value: "snippets", label: "Reference Snippets" },
 ];
+
 
 export function Combobox({ value, onChange }: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
@@ -57,7 +55,7 @@ export function Combobox({ value, onChange }: ComboboxProps) {
           <CommandList>
             <CommandEmpty>No category found.</CommandEmpty>
             <CommandGroup>
-              {plantCategories.map((cat) => (
+              {productCategories.map((cat) => (
                 <CommandItem
                   key={cat.value}
                   value={cat.value}

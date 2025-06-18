@@ -37,7 +37,6 @@ export default function InventoryTable({ products }: InventoryTableProps) {
       (selectedCategory === "" || product.category === selectedCategory)
   );
 
-
   return (
     <div className="w-full">
       <div className="flex items-center gap-2 py-4">
@@ -67,7 +66,7 @@ export default function InventoryTable({ products }: InventoryTableProps) {
             <TableHead>Name</TableHead>
             <TableHead>Category</TableHead>
             <TableHead>Price</TableHead>
-            <TableHead>Stock</TableHead>
+            <TableHead>DownloadUrl</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -97,7 +96,11 @@ export default function InventoryTable({ products }: InventoryTableProps) {
                 <TableCell>{product.name}</TableCell>
                 <TableCell>{product.category}</TableCell>
                 <TableCell>{product.price}</TableCell>
-                <TableCell className="font-bold">{product.stock}</TableCell>
+                <TableCell className="font-bold">
+                  {product.downloadUrl
+                    ? product.downloadUrl.slice(0, 30) + "..."
+                    : "No download"}
+                </TableCell>{" "}
                 <TableCell className="text-right">
                   <div
                     className="flex justify-end space-x-4"

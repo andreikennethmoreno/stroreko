@@ -23,7 +23,7 @@ export default function CreateDialog() {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    stock: 1,
+    downloadUrl: "",
     price: 1,
     category: "",
     userId: "",
@@ -54,9 +54,7 @@ export default function CreateDialog() {
           className="ml-auto font-bold flex items-center gap-2"
           asChild
         >
-          <span>
-            Add Product
-          </span>
+          <span>Add Product</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -97,15 +95,16 @@ export default function CreateDialog() {
           />
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="stock">Stock</Label>
+              <Label htmlFor="downloadUrl">Download URL</Label>
               <Input
-                id="stock"
-                type="number"
-                placeholder="Enter stock quantity"
-                value={formData.stock}
-                onChange={(e) => handleChange("stock", Number(e.target.value))}
+                id="downloadUrl"
+                type="url"
+                placeholder="https://example.com/your-file.zip"
+                value={formData.downloadUrl}
+                onChange={(e) => handleChange("downloadUrl", e.target.value)}
               />
             </div>
+
             <div>
               <Label htmlFor="price">Price</Label>
               <Input

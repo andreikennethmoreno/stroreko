@@ -30,10 +30,10 @@ model Product {
   name        String
   description String?
   category    String
-  stock       Int
   price       Float
   imageUrl    String?
   userId      String
+  downloadUrl String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 

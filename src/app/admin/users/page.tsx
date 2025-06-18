@@ -1,37 +1,21 @@
+import ClientUserTable from "@/components/UserTable";
 import { stackServerApp } from "@/stack";
-import React from "react";
 
-async function AdminUsersPage() {
-  // Get all users (only available to admins with proper access)
-  const users = await stackServerApp.listUsers();
+export default async function AdminUsersPage() {
+  const rawUsers = await stackServerApp.listUsers();
+
+  // Strip out server methods and keep only serializable fields
+  const users = rawUsers.map((user) => ({
+    id: user.id,
+    primaryEmail: user.primaryEmail,
+    displayName: user.displayName,
+    signedUpAt: user.signedUpAt,
+  }));
 
   return (
-    <div className="max-w-5xl mx-auto mt-10">
+    <div className="max-w-5xl mx-auto mt-10 w-full">
       <h1 className="text-2xl font-bold mb-6">All Users</h1>
-      <ul className="space-y-4">
-        {users.map((user) => (
-          <li
-            key={user.id}
-            className="border p-4 rounded-md shadow-sm bg-white dark:bg-zinc-900"
-          >
-            <p>
-              <strong>ID:</strong> {user.id}
-            </p>
-            <p>
-              <strong>Email:</strong> {user.primaryEmail}
-            </p>
-            <p>
-              <strong>Display Name:</strong> {user.displayName}
-            </p>
-            <p>
-              <strong>Signed Up:</strong>{" "}
-              {new Date(user.signedUpAt).toLocaleString()}
-            </p>
-          </li>
-        ))}
-      </ul>
+      <ClientUserTable users={users} />
     </div>
   );
 }
-
-export default AdminUsersPage;

@@ -58,17 +58,6 @@ async function Navbar() {
                   className="flex items-center gap-2"
                   asChild
                 >
-                  <Link href="/admin/orders">
-                    <ClipboardList className="w-4 h-4" />
-                    <span className="hidden lg:inline">Orders</span>
-                  </Link>
-                </Button>
-
-                <Button
-                  variant="ghost"
-                  className="flex items-center gap-2"
-                  asChild
-                >
                   <Link href="/admin/myproducts">
                     <Settings className="w-4 h-4" />
                     <span className="hidden lg:inline">Manage Products</span>
@@ -88,10 +77,21 @@ async function Navbar() {
               </>
             )}
 
-            <ModeToggle />
-
             {user ? (
               <>
+                <Button
+                  variant="ghost"
+                  className="flex items-center gap-2"
+                  asChild
+                >
+                  <Link href="/orders">
+                    <ClipboardList className="w-4 h-4" />
+                    <span className="hidden lg:inline">Orders</span>
+                  </Link>
+                </Button>
+
+                <ModeToggle />
+
                 <Button
                   variant="outline"
                   className="flex items-center gap-2"
@@ -105,16 +105,20 @@ async function Navbar() {
                 <UserButton />
               </>
             ) : (
-              <Button
-                variant="ghost"
-                className="flex items-center gap-2"
-                asChild
-              >
-                <Link href={app.signIn}>
-                  <LogIn className="w-4 h-4" />
-                  <span className="hidden lg:inline">Sign In</span>
-                </Link>
-              </Button>
+              <>
+                <Button
+                  variant="ghost"
+                  className="flex items-center gap-2"
+                  asChild
+                >
+                  <Link href={app.signIn}>
+                    <LogIn className="w-4 h-4" />
+                    <span className="hidden lg:inline">Sign In</span>
+                  </Link>
+                </Button>
+
+                <ModeToggle />
+              </>
             )}
           </div>
         </div>

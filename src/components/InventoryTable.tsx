@@ -37,43 +37,6 @@ export default function InventoryTable({ products }: InventoryTableProps) {
       (selectedCategory === "" || product.category === selectedCategory)
   );
 
-  if (!products) {
-    return (
-      <div className="w-full space-y-4">
-        <div className="flex items-center gap-2 py-4">
-          <Skeleton className="h-10 w-full max-w-sm" />
-          <Skeleton className="h-10 w-32" />
-          <Skeleton className="h-10 w-32" />
-        </div>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              {Array(6)
-                .fill(0)
-                .map((_, i) => (
-                  <TableHead key={i}>
-                    <Skeleton className="w-full h-4" />
-                  </TableHead>
-                ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <TableRow key={i}>
-                {Array(6)
-                  .fill(0)
-                  .map((_, j) => (
-                    <TableCell key={j}>
-                      <Skeleton className="w-full h-4" />
-                    </TableCell>
-                  ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-    );
-  }
 
   return (
     <div className="w-full">

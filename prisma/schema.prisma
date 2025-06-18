@@ -14,12 +14,6 @@ datasource db {
 }
 
 
-
-
-
-
-
-
 model CartItem {
   id         String    @id @default(uuid())
   userId     String    // no relation, just a string

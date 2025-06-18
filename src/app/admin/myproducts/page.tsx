@@ -3,7 +3,7 @@ import InventoryTable from "@/components/InventoryTable";
 import { stackServerApp } from "@/stack";
 import { notFound } from "next/navigation";
 
-async function AdminPage() {
+async function AdminProductsPage() {
   const user = await stackServerApp.getUser();
 
   // Grab admin credentials from environment
@@ -28,4 +28,4 @@ async function AdminPage() {
   );
 }
 
-export default AdminPage;
+export default AdminProductsPage;

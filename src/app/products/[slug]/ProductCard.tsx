@@ -9,6 +9,7 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { getProductById } from "@/actions/product.aciton";
+import AddToCartButton from "@/components/AddtoCartButton";
 
 type Product = Awaited<ReturnType<typeof getProductById>>;
 
@@ -48,6 +49,9 @@ export default function ProductCard({ product }: ProductCardProps) {
             <CardDescription className="text-white">
               {product.description}
             </CardDescription>
+
+            <AddToCartButton productId={product.id} />
+            
           </CardContent>
         </div>
       </div>

@@ -1,14 +1,17 @@
 // components/PayPalCheckout.tsx
 "use client";
 
+import { createOrderFromCart } from "@/actions/order.action";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 interface PayPalCheckoutProps {
   total: number;
+  selectedCartItemIds: string[];
 }
 
-export default function PayPalCheckout({ total }: PayPalCheckoutProps) {
+export default function PayPalCheckout({ total, selectedCartItemIds }: PayPalCheckoutProps) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [paypalError, setPaypalError] = useState("");
 
@@ -27,8 +30,18 @@ export default function PayPalCheckout({ total }: PayPalCheckoutProps) {
   };
 
   const onApprove = async (data: any, actions: any) => {
-    setIsProcessing(true); 
+    setIsProcessing(true);
 
+
+    try {
+      await createOrderFromCart(selectedCartItemIds);
+      toast.success("Order created successfully!");
+    } catch (error) {
+      toast.error("Failed to create order.");
+      console.error(error);
+    } finally {
+      setIsProcessing(false);
+    }
 
     try {
       const order = await actions.order.get();
@@ -67,7 +80,6 @@ export default function PayPalCheckout({ total }: PayPalCheckoutProps) {
     setPaypalError("An error occurred with PayPal. Please try again.");
   };
 
-  
   return (
     <div>
       {isProcessing && (
@@ -84,8 +96,6 @@ export default function PayPalCheckout({ total }: PayPalCheckoutProps) {
       )}
 
       <div className="border rounded-2xl p-4 shadow-sm bg-white">
-  
-
         <PayPalScriptProvider
           options={{
             clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "",

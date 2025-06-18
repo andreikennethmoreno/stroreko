@@ -1,7 +1,20 @@
 import ClientUserTable from "@/components/UserTable";
 import { stackServerApp } from "@/stack";
+import { notFound } from "next/navigation";
 
 export default async function AdminUsersPage() {
+ const user = await stackServerApp.getUser();
+
+  // Grab admin credentials from environment
+  const adminId = process.env.ADMIN_ID;
+  const adminEmail = process.env.ADMIN_EMAIL;
+
+  // Check if user matches admin credentials
+  const isAdmin =
+    user && user.id === adminId && user.primaryEmail === adminEmail;
+
+  if (!isAdmin) return notFound();
+
   const rawUsers = await stackServerApp.listUsers();
 
   // Strip out server methods and keep only serializable fields

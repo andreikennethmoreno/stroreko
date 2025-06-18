@@ -31,6 +31,13 @@ async function Navbar() {
           {/* Navbar Items */}
           <div className="hidden md:flex items-center space-x-4">
             <Button variant="ghost" className="flex items-center gap-2" asChild>
+              <Link href="/">
+                <HomeIcon className="w-4 h-4" />
+                <span className="hidden lg:inline">Home</span>
+              </Link>
+            </Button>
+
+            <Button variant="ghost" className="flex items-center gap-2" asChild>
               <Link href="/products">
                 <Package className="w-4 h-4" />
                 <span className="hidden lg:inline">Products</span>
@@ -41,13 +48,6 @@ async function Navbar() {
               <Link href="/cart">
                 <ShoppingCart className="w-4 h-4" />
                 <span className="hidden lg:inline">Cart</span>
-              </Link>
-            </Button>
-
-            <Button variant="ghost" className="flex items-center gap-2" asChild>
-              <Link href="/">
-                <HomeIcon className="w-4 h-4" />
-                <span className="hidden lg:inline">Home</span>
               </Link>
             </Button>
 

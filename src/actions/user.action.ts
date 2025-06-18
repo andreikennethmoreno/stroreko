@@ -26,3 +26,13 @@ export async function getUserId() {
 
   return userId;
 }
+
+export async function getUserEmail(): Promise<string | null> {
+  const user = await stackServerApp.getUser();
+
+  if (!user || !user.primaryEmail) {
+    return null;
+  }
+
+  return user.primaryEmail;
+}

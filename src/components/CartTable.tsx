@@ -64,6 +64,10 @@ export default function CartTable({ cartItems }: CartTableProps) {
     item.product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const selectedCartItemIds = filteredItems
+    .filter((item) => selected[item.id])
+    .map((item) => item.id);
+
   // Calculate totals for selected items
   const selectedSummary = useMemo(() => {
     const selectedItems = filteredItems.filter((item) => selected[item.id]);
@@ -311,7 +315,10 @@ export default function CartTable({ cartItems }: CartTableProps) {
                       </div>
                     </div>
 
-                    <PayPalCheckout total={selectedSummary.totalAmount} />
+                    <PayPalCheckout
+                      total={selectedSummary.totalAmount}
+                      selectedCartItemIds={selectedCartItemIds}
+                    />
                   </>
                 ) : (
                   <div className="text-center py-8">

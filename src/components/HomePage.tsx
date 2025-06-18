@@ -1,4 +1,3 @@
-"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -20,6 +19,9 @@ import {
   Award,
   ShoppingCart,
 } from "lucide-react";
+import { getProducts } from "@/actions/product.aciton";
+import CardList from "./CardList";
+import Link from "next/link";
 
 // Mock data matching your product schema
 const mockProducts = [
@@ -142,20 +144,10 @@ const productCategories = [
   },
 ];
 
-export default function HomePage() {
-  const router = useRouter();
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const handleProductClick = (product: any) => {
-    const slugifiedName = product.name.toLowerCase().replace(/\s+/g, "-");
-    const slug = `${product.id}--${slugifiedName}`;
-    const productUrl = `/products/${slug}`;
-    router.push(productUrl);
-  };
-
-  const handleCategoryClick = (category: string) => {
-    router.push(`/products?category=${category}`);
-  };
+export  default async function HomePage() {
+  const productsResult = await getProducts();
+  const products = productsResult?.userProducts?.slice(0, 3) ?? [];
+  
 
   const featuredProducts = mockProducts.slice(0, 3);
   const popularProducts = mockProducts.slice(3, 6);
@@ -208,10 +200,11 @@ export default function HomePage() {
             {productCategories.map((category) => {
               const Icon = category.icon;
               return (
+                <Link href="/products">
+
                 <Card
                   key={category.value}
                   className="group cursor-pointer border-[1px] border-gray-200  shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 "
-                  onClick={() => handleCategoryClick(category.value)}
                 >
                   <CardContent className="p-8 text-center">
                     <div
@@ -242,7 +235,8 @@ export default function HomePage() {
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </CardContent>
-                </Card>
+                  </Card>
+                  </Link>
               );
             })}
           </div>
@@ -261,28 +255,24 @@ export default function HomePage() {
                 Hand-picked premium products from our collection
               </p>
             </div>
-            <Button
-              variant="outline"
-              className="hidden md:flex"
-              onClick={() => router.push("/products")}
-            >
+            <Button variant="outline" className="hidden md:flex">
               View All Products
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProducts.map((product) => (
-              <Card
+            {products.map((product) => (
+
+              <Link href={`/products/${product.id}`}>  <Card
                 key={product.id}
                 className="group cursor-pointer border-0 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2  overflow-hidden"
-                onClick={() => handleProductClick(product)}
               >
                 <CardContent className="p-0">
                   {/* Product Image */}
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <img
-                      src={product.imageUrl}
+                      src={product.imageUrl ?? ""}
                       alt={product.name}
                       className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
                     />
@@ -315,33 +305,26 @@ export default function HomePage() {
                       <div className="text-3xl font-bold ">
                         ${product.price.toLocaleString()}
                       </div>
-                      <Button
-                        className="bg-blue-600 hover:bg-blue-700  px-6 py-2 rounded-xl font-semibold"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          // Add to cart functionality would go here
-                        }}
-                      >
+                      <Button className="bg-blue-600 hover:bg-blue-700  px-6 py-2 rounded-xl font-semibold">
                         <ShoppingCart className="h-4 w-4 mr-2" />
                         Add to Cart
                       </Button>
                     </div>
                   </div>
                 </CardContent>
-              </Card>
+                </Card>
+                </Link>
             ))}
           </div>
 
           {/* Mobile View All Button */}
           <div className="text-center mt-12 md:hidden">
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={() => router.push("/products")}
-            >
-              View All Products
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+            <Link href="/products">
+              <Button variant="outline" size="lg">
+                View All Products
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

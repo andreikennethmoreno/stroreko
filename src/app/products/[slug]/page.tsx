@@ -24,10 +24,6 @@ async function Page({ params }: { params: { slug: string } }) {
   const [id] = params.slug.split("--");
   const product = await getProductById(id);
 
-  if (!user) {
-    return <SignIn />;
-  }
-
   if (!product) throw new Error("Product not found");
 
   // Convert null fields to undefined to match Product type

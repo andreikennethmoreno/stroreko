@@ -219,7 +219,7 @@ For support and questions:
 
 ## 👨‍💻 Developer
 
-**Andrew Kenneet Moreno** - Lead Developer, Group 5
+**Andrei Kenneth Moreno** - Lead Developer, Group 5
 
 ---
 

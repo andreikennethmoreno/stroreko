@@ -1,12 +1,13 @@
 // app/(protected)/orders/page.tsx
 
-import React from "react";
+import React, { Suspense } from "react";
 import { getOrders } from "@/actions/order.action";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Download, Calendar, Package, ShoppingBag } from "lucide-react";
+import Spinner from "@/components/Spinner";
 
 export default async function OrdersPage() {
   const { success, orders, isAdmin } = await getOrders();
@@ -62,6 +63,8 @@ export default async function OrdersPage() {
   };
 
   return (
+    <Suspense fallback={<Spinner></Spinner>}>
+
     <div className="min-h-screen ">
       <div className="container mx-auto px-4 py-8 max-w-5xl">
         <div className="mb-8">
@@ -219,6 +222,7 @@ export default async function OrdersPage() {
           ))}
         </div>
       </div>
-    </div>
+      </div>
+      </Suspense>
   );
 }

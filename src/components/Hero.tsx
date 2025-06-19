@@ -26,7 +26,7 @@ const Hero7 = ({
   description = "A tailor-made platform where I sell source code, templates, and learning resources directly to you—free from third-party fees and restrictions.",
   button = {
     text: "Browse Projects",
-    url: "/store",
+    url: "http://localhost:3000/products",
   },
   reviews = {
     count: 100,

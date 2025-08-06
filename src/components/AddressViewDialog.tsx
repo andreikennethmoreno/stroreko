@@ -45,11 +45,18 @@ type AddressFormData = {
   phone: string;
 };
 
-export default function AddressViewDialog() {
+interface AddressViewDialogProps {
+  onAddressChange?: () => void; // Callback to notify parent of address changes
+}
+
+export default function AddressViewDialog({
+  onAddressChange,
+}: AddressViewDialogProps) {
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [editingAddressId, setEditingAddressId] = useState<string | null>(null);
+  const [isOpen, setIsOpen] = useState(false); // Track dialog open state
 
   const [formData, setFormData] = useState<AddressFormData>({
     fullName: "",
@@ -63,8 +70,10 @@ export default function AddressViewDialog() {
   });
 
   useEffect(() => {
-    loadAddresses();
-  }, []);
+    if (isOpen) {
+      loadAddresses();
+    }
+  }, [isOpen]);
 
   const loadAddresses = async () => {
     try {
@@ -125,6 +134,11 @@ export default function AddressViewDialog() {
       // Reset form and reload addresses
       resetForm();
       await loadAddresses();
+
+      // Notify parent component of address change
+      if (onAddressChange) {
+        onAddressChange();
+      }
     } catch (error) {
       console.error("Error saving address:", error);
     } finally {
@@ -138,6 +152,11 @@ export default function AddressViewDialog() {
     try {
       await deleteShippingAddress(addressId);
       await loadAddresses();
+
+      // Notify parent component of address change
+      if (onAddressChange) {
+        onAddressChange();
+      }
     } catch (error) {
       console.error("Error deleting address:", error);
     }
@@ -164,7 +183,7 @@ export default function AddressViewDialog() {
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">
           <MapPinHouse />

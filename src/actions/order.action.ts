@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { getUserEmail, getUserId } from "./user.action";
 import { revalidatePath } from "next/cache";
 import { stackServerApp } from "@/stack";
+import { getShippingAddresses } from "./address.action";
 
 export async function createOrderFromCart(selectedCartItemIds: string[]) {
   try {
@@ -79,7 +80,7 @@ export async function getOrders() {
 
     const whereClause = isAdmin
       ? {} // Admin sees all
-      : { userId: user.id }; // Regular users see only theirs
+      : { userId: user.id }; // Regular users see only their own
 
     const orders = await prisma.order.findMany({
       where: whereClause,
@@ -95,16 +96,25 @@ export async function getOrders() {
       },
     });
 
+    // ✅ Always return addresses for the currently logged-in user
+    const shippingAddresses = await getShippingAddresses();
+
     revalidatePath("/orders");
 
-    return { success: true, orders, isAdmin };
+    return {
+      success: true,
+      orders,
+      addresses: shippingAddresses,
+      isAdmin,
+    };
   } catch (error) {
     console.error("Error fetching orders:", error);
     return {
       success: false,
       message: "Failed to retrieve orders",
       isAdmin: false,
+      orders: [],
+      addresses: [],
     };
   }
 }
-  

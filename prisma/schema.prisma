@@ -64,3 +64,19 @@ model OrderItem {
   quantity   Int
   price      Float
 }
+
+model ShippingAddress {
+  id        String   @id @default(uuid())
+  userId    String   // from StackAuth
+  fullName  String
+  address1  String
+  address2  String?
+  city      String
+  state     String
+  zipCode   String
+  country   String
+  phone     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

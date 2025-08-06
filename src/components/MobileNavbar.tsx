@@ -14,9 +14,12 @@ import {
   Users,
   Menu,
   X,
+  MapPinHouse,
 } from "lucide-react";
 import ModeToggle from "./ModeTogggle";
 import { UserButton } from "@stackframe/stack";
+import { useRouter } from "next/navigation";
+import AddressViewDialog from "./AddressViewDialog";
 
 interface MobileNavbarProps {
   user: any;
@@ -33,16 +36,18 @@ export default function MobileNavbar({
 
   const commonBtnProps = {
     variant: "ghost" as const,
-    className: "flex items-center gap-2 w-full justify-start",
+    className: "flex items-center gap-2 w-full justify-start px-4 py-2 text-sm",
     asChild: true,
-    onClick: () => setMenuOpen(false), // close menu on click link
+    onClick: () => setMenuOpen(false),
   };
+
+    const router = useRouter();
+
 
   return (
     <nav className="md:hidden sticky top-0 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center h-16 justify-between">
-          {/* Logo */}
           <Link
             href="/"
             className="text-xl font-bold font-mono tracking-wider"
@@ -51,10 +56,9 @@ export default function MobileNavbar({
             ✳️ StoreKO
           </Link>
 
-          {/* Hamburger button */}
           <button
             aria-label="Toggle menu"
-            className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
+            className="p-2 rounded-md hover:bg-accent"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             {menuOpen ? (
@@ -65,9 +69,30 @@ export default function MobileNavbar({
           </button>
         </div>
 
-        {/* Mobile menu */}
         {menuOpen && (
-          <div className="flex flex-col space-y-2 pb-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="flex flex-col space-y-1 pb-4 border-t pt-2 border-border animate-in fade-in slide-in-from-top-2">
+            {user && (
+              <div className="px-4 pb-2">
+                <div className="flex items-center gap-3">
+                  <UserButton
+                    extraItems={[
+                      {
+                        text: "Address",
+                        icon: <MapPinHouse size={16} />,
+                        onClick: () => router.push("/address"),
+                      },
+                    ]}
+                  />
+                  <div className="text-sm">
+                    <p className="font-medium">{user.name ?? "User"}</p>
+                    <p className="text-muted-foreground text-xs">
+                      {user.primaryEmail ?? "—"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <Button {...commonBtnProps}>
               <Link href="/">
                 <HomeIcon className="w-5 h-5" />
@@ -107,7 +132,7 @@ export default function MobileNavbar({
               </>
             )}
 
-            {user ? (
+            {user && (
               <>
                 <Button {...commonBtnProps}>
                   <Link href="/orders">
@@ -116,36 +141,31 @@ export default function MobileNavbar({
                   </Link>
                 </Button>
 
-                <ModeToggle />
-
                 <Button
                   variant="outline"
-                  className="w-full"
+                  className="w-full mt-2 mx-4"
                   asChild
                   onClick={() => setMenuOpen(false)}
-                >
-                  <Link href={app.signOut} className="flex items-center gap-2">
-                    <LogOut className="w-5 h-5" />
-                    Sign Out
-                  </Link>
-                </Button>
+                ></Button>
 
-                <div className="px-2">
-                  <UserButton />
-                </div>
-              </>
-            ) : (
-              <>
-                <Button {...commonBtnProps}>
-                  <Link href={app.signIn}>
-                    <LogIn className="w-5 h-5" />
-                    Sign In
-                  </Link>
-                </Button>
 
-                <ModeToggle />
+                  <AddressViewDialog />
+                
               </>
             )}
+
+            {!user && (
+              <Button {...commonBtnProps}>
+                <Link href={app.signIn}>
+                  <LogIn className="w-5 h-5" />
+                  Sign In
+                </Link>
+              </Button>
+            )}
+
+            <div className="px-4 pt-2">
+              <ModeToggle />
+            </div>
           </div>
         )}
       </div>

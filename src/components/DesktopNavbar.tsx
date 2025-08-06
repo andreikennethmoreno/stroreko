@@ -7,6 +7,7 @@ import {
   HomeIcon,
   LogIn,
   LogOut,
+  MapPinHouse,
   Package,
   Settings,
   ShoppingCart,
@@ -14,6 +15,7 @@ import {
 } from "lucide-react";
 import { UserButton } from "@stackframe/stack";
 import ModeToggle from "./ModeTogggle";
+import AddressViewDialog from "./AddressViewDialog";
 
 type Props = {
   user: any;
@@ -25,6 +27,7 @@ type Props = {
 };
 
 export default function DesktopNavbar({ user, app, isAdmin }: Props) {
+
   return (
     <div className="hidden md:flex items-center h-16 justify-between max-w-7xl mx-auto px-4">
       {/* Logo */}
@@ -88,11 +91,9 @@ export default function DesktopNavbar({ user, app, isAdmin }: Props) {
               className="flex items-center gap-2"
               asChild
             >
-              <Link href={app.signOut}>
-                <LogOut className="w-4 h-4" />
-                <span className="hidden lg:inline">Sign Out</span>
-              </Link>
+              <AddressViewDialog />
             </Button>
+
             <UserButton />
           </>
         ) : (

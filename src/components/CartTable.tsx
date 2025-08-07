@@ -20,6 +20,7 @@ import RemoveFromCartButton from "./RemoveToCart";
 import { updateCartQuantity } from "@/actions/cart.action";
 import toast from "react-hot-toast";
 import PayPalCheckout from "./PaypalCheckout";
+import Image from "next/image";
 
 type CartItems = {
   id: string;
@@ -181,11 +182,13 @@ export default function CartTable({ cartItems }: CartTableProps) {
                         </TableCell>
                         <TableCell>
                           <div className="w-16 h-16 rounded-lg overflow-hidden border ">
-                            <img
+                            <Image
                               src={
                                 product.imageUrl ?? "/placeholder-product.jpg"
                               }
                               alt={product.name}
+                              width={800}
+                              height={450}
                               className="w-full h-full object-cover"
                             />
                           </div>

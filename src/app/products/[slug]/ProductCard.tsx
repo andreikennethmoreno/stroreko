@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Download } from "lucide-react";
 import AddToCartButton from "@/components/AddtoCartButton";
+import Image from "next/image";
 
 // Mock type based on your schema
 type Product = {
@@ -39,11 +40,14 @@ export default function ProductCard({ product }: ProductCardProps) {
           <Card className="overflow-hidden border-0 shadow-lg">
             <CardHeader className="p-0">
               {product.imageUrl ? (
-                <div className="aspect-[16/9] overflow-hidden bg-gradient-to-br from-muted/50 to-muted">
-                  <img
+                <div className="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-muted/50 to-muted">
+                  <Image
                     src={product.imageUrl}
                     alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                    width={800}
+                    height={450}
+                    className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </div>
               ) : (
@@ -86,7 +90,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
           {/* Purchase Section */}
           <div className="space-y-4 pt-4">
-              <AddToCartButton productId={product.id} />
+            <AddToCartButton productId={product.id} />
 
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">

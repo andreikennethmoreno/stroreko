@@ -48,6 +48,7 @@ import CreateDialog from "./CreateDialog";
 import EditDialog from "./EditDialog";
 import DeleteDialog from "./DeleteDialog";
 import { getProducts } from "@/actions/product.aciton";
+import Image from "next/image";
 
 type Products = Awaited<ReturnType<typeof getProducts>>;
 
@@ -292,13 +293,15 @@ export default function InventoryTable({ products }: InventoryTableProps) {
                       >
                         <TableCell className="py-4">
                           <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-lg overflow-hidden  flex-shrink-0">
-                              <img
+                            <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                              <Image
                                 src={
                                   product.imageUrl ||
                                   "https://images.pexels.com/photos/607812/pexels-photo-607812.jpeg"
                                 }
                                 alt={product.name}
+                                width={48}
+                                height={48}
                                 className="w-full h-full object-cover"
                               />
                             </div>
@@ -361,7 +364,7 @@ export default function InventoryTable({ products }: InventoryTableProps) {
                   <CardContent className="p-0">
                     {/* Product Image */}
                     <div className="relative aspect-[4/5] w-full overflow-hidden rounded-t-xl ">
-                      <img
+                      <Image
                         src={
                           product.imageUrl ||
                           "https://images.pexels.com/photos/607812/pexels-photo-607812.jpeg"

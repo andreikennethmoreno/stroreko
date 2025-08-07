@@ -3,6 +3,7 @@ import React from "react";
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface Hero7Props {
   heading?: string;
@@ -65,7 +66,7 @@ const Hero7 = ({
           </p>
         </div>
         <Button asChild size="lg" className="mt-10">
-          <a href={button.url}>{button.text}</a>
+          <Link href={button.url}>{button.text} </Link>
         </Button>
         <div className="mx-auto mt-10 flex w-fit flex-col items-center gap-4 sm:flex-row">
           <span className="mx-4 inline-flex items-center -space-x-4">

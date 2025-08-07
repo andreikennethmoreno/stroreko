@@ -18,6 +18,7 @@ import {
 import Spinner from "@/components/Spinner";
 import AddressViewDialog from "@/components/AddressViewDialog"; // Adjust path as needed
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function OrdersPage() {
   const { success, orders, addresses, isAdmin } = await getOrders();
@@ -184,16 +185,15 @@ export default async function OrdersPage() {
                       <div key={item.id}>
                         <div className="p-6">
                           <div className="flex gap-4">
-                            <div className="rounded-xl overflow-hidden flex-shrink-0 border">
-                          
+                            <div className=" rounded-xl overflow-hidden flex-shrink-0 border">
                               <Image
                                 src={
                                   product.imageUrl || "/placeholder-product.jpg"
                                 }
                                 alt={product.name}
-                                width={20}
-                                height={20}
-                                className="w-full h-full object-cover"
+                                width={100}
+                                height={60}
+                                className="object-cover w-full h-full"
                               />
                             </div>
 
@@ -241,7 +241,7 @@ export default async function OrdersPage() {
                                       asChild
                                       className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
                                     >
-                                      <a
+                                      <Link
                                         href={product.downloadUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
@@ -249,7 +249,7 @@ export default async function OrdersPage() {
                                       >
                                         <Download className="h-4 w-4" />
                                         Download
-                                      </a>
+                                      </Link>
                                     </Button>
                                   ) : (
                                     <Button

@@ -17,6 +17,7 @@ import {
 import Link from "next/link";
 import AddToCartButton from "./AddtoCartButton";
 import { getProducts } from "@/actions/product.aciton";
+import Image from "next/image";
 
 type Products = Awaited<ReturnType<typeof getProducts>>;
 
@@ -187,12 +188,14 @@ export default function CardList({ products }: CardListProps) {
                       viewMode === "list" ? "rounded-l-xl rounded-tr-none" : ""
                     }`}
                   >
-                    <img
+                    <Image
                       src={
                         product.imageUrl ||
                         "https://images.pexels.com/photos/607812/pexels-photo-607812.jpeg"
                       }
                       alt={product.name}
+                      width={800}
+                      height={450}
                       className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

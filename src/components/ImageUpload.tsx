@@ -1,6 +1,7 @@
 import { OurFileRouter } from "@/app/api/uploadthing/core";
 import { UploadDropzone } from "@uploadthing/react";
 import { XIcon } from "lucide-react";
+import Image from "next/image";
 import React from "react";
 
 interface ImageUploadProps {
@@ -13,11 +14,14 @@ function ImageUpload({ endpoint, onChange, value }: ImageUploadProps) {
   if (value) {
     return (
       <div className="relative size-40">
-        <img
+        <Image
           src={value}
           alt="Upload"
+          width={160}
+          height={160}
           className="rounded-md w-full h-full object-cover"
         />
+
         <button
           onClick={() => onChange("")}
           className="absolute top-0 right-0 p-1 bg-red-500 rounded-full shadow-sm"

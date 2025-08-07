@@ -22,6 +22,7 @@ import {
 import { getProducts } from "@/actions/product.aciton";
 import CardList from "./CardList";
 import Link from "next/link";
+import Image from "next/image";
 
 // Mock data matching your product schema
 const mockProducts = [
@@ -201,42 +202,41 @@ export  default async function HomePage() {
               const Icon = category.icon;
               return (
                 <Link href="/products">
-
-                <Card
-                  key={category.value}
-                  className="group cursor-pointer border-[1px] border-gray-200  shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 "
-                >
-                  <CardContent className="p-8 text-center">
-                    <div
-                      className={`w-16 h-16 rounded-2xl ${category.color} flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}
-                    >
-                      <Icon className="h-8 w-8" />
-                    </div>
-                    <h3 className="text-xl font-semibold  mb-3 group-hover:text-blue-600 transition-colors">
-                      {category.label}
-                    </h3>
-                    <p className=" mb-6">
-                      {category.value === "code" &&
-                        "Ready-to-use code templates and projects"}
-                      {category.value === "courses" &&
-                        "Comprehensive learning materials and tutorials"}
-                      {category.value === "guides" &&
-                        "In-depth PDF guides and documentation"}
-                      {category.value === "templates" &&
-                        "Productivity and workflow templates"}
-                      {category.value === "snippets" &&
-                        "Useful code snippets and references"}
-                    </p>
-                    <Button
-                      variant="outline"
-                      className="group-hover:bg-blue-600 group-hover: group-hover:border-blue-600 transition-all duration-300"
-                    >
-                      Explore {category.label}
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </CardContent>
+                  <Card
+                    key={category.value}
+                    className="group cursor-pointer border-[1px] border-gray-200  shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 "
+                  >
+                    <CardContent className="p-8 text-center">
+                      <div
+                        className={`w-16 h-16 rounded-2xl ${category.color} flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}
+                      >
+                        <Icon className="h-8 w-8" />
+                      </div>
+                      <h3 className="text-xl font-semibold  mb-3 group-hover:text-blue-600 transition-colors">
+                        {category.label}
+                      </h3>
+                      <p className=" mb-6">
+                        {category.value === "code" &&
+                          "Ready-to-use code templates and projects"}
+                        {category.value === "courses" &&
+                          "Comprehensive learning materials and tutorials"}
+                        {category.value === "guides" &&
+                          "In-depth PDF guides and documentation"}
+                        {category.value === "templates" &&
+                          "Productivity and workflow templates"}
+                        {category.value === "snippets" &&
+                          "Useful code snippets and references"}
+                      </p>
+                      <Button
+                        variant="outline"
+                        className="group-hover:bg-blue-600 group-hover: group-hover:border-blue-600 transition-all duration-300"
+                      >
+                        Explore {category.label}
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </CardContent>
                   </Card>
-                  </Link>
+                </Link>
               );
             })}
           </div>
@@ -263,57 +263,63 @@ export  default async function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.map((product) => (
+              <Link href={`/products/${product.id}`}>
+                {" "}
+                <Card
+                  key={product.id}
+                  className="group cursor-pointer border-0 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2  overflow-hidden"
+                >
+                  <CardContent className="p-0">
+                    {/* Product Image */}
+                    <div className="relative aspect-[16/10] overflow-hidden">
+                      <Image
+                        src={product.imageUrl ?? ""}
+                        alt={product.name}
+                        width={800}
+                        height={450}
+                        className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+                      />
 
-              <Link href={`/products/${product.id}`}>  <Card
-                key={product.id}
-                className="group cursor-pointer border-0 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2  overflow-hidden"
-              >
-                <CardContent className="p-0">
-                  {/* Product Image */}
-                  <div className="relative aspect-[16/10] overflow-hidden">
-                    <img
-                      src={product.imageUrl ?? ""}
-                      alt={product.name}
-                      className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                    {/* Category Badge */}
-                    <Badge className="absolute top-4 left-4 /90  border-0 font-semibold">
-                      {
-                        productCategories.find(
-                          (cat) => cat.value === product.category
-                        )?.label
-                      }
-                    </Badge>
+                      {/* Category Badge */}
+                      <Badge className="absolute top-4 left-4 /90  border-0 font-semibold">
+                        {
+                          productCategories.find(
+                            (cat) => cat.value === product.category
+                          )?.label
+                        }
+                      </Badge>
 
-                    {/* Featured Badge */}
-                    <div className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-400  px-3 py-1 rounded-full text-sm font-semibold flex items-center">
-                      <Star className="h-3 w-3 mr-1 fill-current" />
-                      Featured
-                    </div>
-                  </div>
-
-                  {/* Product Info */}
-                  <div className="p-6">
-                    <h3 className="font-bold text-xl  mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
-                      {product.name}
-                    </h3>
-                    <p className=" mb-4 line-clamp-2">{product.description}</p>
-
-                    <div className="flex items-center justify-between">
-                      <div className="text-3xl font-bold ">
-                        ${product.price.toLocaleString()}
+                      {/* Featured Badge */}
+                      <div className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-400  px-3 py-1 rounded-full text-sm font-semibold flex items-center">
+                        <Star className="h-3 w-3 mr-1 fill-current" />
+                        Featured
                       </div>
-                      <Button className="bg-blue-600 hover:bg-blue-700  px-6 py-2 rounded-xl font-semibold">
-                        <ShoppingCart className="h-4 w-4 mr-2" />
-                        Add to Cart
-                      </Button>
                     </div>
-                  </div>
-                </CardContent>
+
+                    {/* Product Info */}
+                    <div className="p-6">
+                      <h3 className="font-bold text-xl  mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+                        {product.name}
+                      </h3>
+                      <p className=" mb-4 line-clamp-2">
+                        {product.description}
+                      </p>
+
+                      <div className="flex items-center justify-between">
+                        <div className="text-3xl font-bold ">
+                          ${product.price.toLocaleString()}
+                        </div>
+                        <Button className="bg-blue-600 hover:bg-blue-700  px-6 py-2 rounded-xl font-semibold">
+                          <ShoppingCart className="h-4 w-4 mr-2" />
+                          Add to Cart
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
                 </Card>
-                </Link>
+              </Link>
             ))}
           </div>
 

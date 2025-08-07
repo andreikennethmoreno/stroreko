@@ -25,14 +25,15 @@ export default function AddToCartButton({
     try {
       await addToCart(productId, quantity);
       toast.success("Added to cart!");
-      router.push(redirectTo); // 🔁 redirect after success
+      // Delay `setIsLoading(false)` until redirect has finished
+      router.push(redirectTo);
     } catch (error) {
       console.error("Add to cart failed", error);
       toast.error("Failed to add to cart");
-    } finally {
       setIsLoading(false);
     }
   };
+
 
   return (
     <Button onClick={handleAddToCart} disabled={isLoading}>
